@@ -13,6 +13,10 @@
     <th>ステータス</th>
     <td><%= @task.status %></td>
   </tr>
+  <tr>
+    <th>投稿者</th></th>
+    <td><%= @task.user.name %></td>
+  </tr>
 </table>
 
 <%= link_to '一覧に戻る', tasks_path, class: 'btn btn-default' %>

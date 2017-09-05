@@ -6,6 +6,9 @@ class TasksController < ApplicationController
   end
 
   def show
+    if @task.user.id != current_user.id then
+      redirect_to tasks_url
+    end
   end
 
   def new
@@ -14,6 +17,7 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(task_params)
+    @task.user_id = current_user.id
 
     if @task.save
       flash[:success] = 'Task が正常に投稿されました'
@@ -25,6 +29,9 @@ class TasksController < ApplicationController
   end
 
   def edit
+    if @task.user.id != current_user.id then
+      redirect_to tasks_url
+    end
   end
 
   def update
