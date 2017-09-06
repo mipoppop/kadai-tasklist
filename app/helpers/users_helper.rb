@@ -6,8 +6,8 @@ module UsersHelper
   end
   
   def alt
-    if @user.id != current_user.id then
-      '<div class="alert alert-warning" >確認のため、あえて他ユーザのタスクリストを表示しています。</div>'
+    if @user.id == current_user.id then
+      render 'tasks', user: @user
     else
       ''
     end

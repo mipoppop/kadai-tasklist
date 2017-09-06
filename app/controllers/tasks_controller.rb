@@ -2,13 +2,13 @@ class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   def index
-    @tasks = Task.all
+    @user = current_user
+    @tasks = @user.tasks.order('created_at DESC')
+
   end
 
   def show
-    if @task.user.id != current_user.id then
-      redirect_to tasks_url
-    end
+    useronly(@task)
   end
 
   def new
@@ -29,12 +29,12 @@ class TasksController < ApplicationController
   end
 
   def edit
-    if @task.user.id != current_user.id then
-      redirect_to tasks_url
-    end
+    useronly(@task)
   end
 
   def update
+    useronly(@task)
+    
     if @task.update(task_params)
       flash[:success] = 'Task は正常に更新されました'
       redirect_to @task
@@ -45,6 +45,8 @@ class TasksController < ApplicationController
   end
 
   def destroy
+    useronly(@task)
+    
     @task.destroy
 
     flash[:success] = 'Task は正常に削除されました'
